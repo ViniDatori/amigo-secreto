@@ -2,59 +2,62 @@
 
 let amigosIncluidos = [];
 let amigosJaSorteados = [];
-let participantes;
 
 // Função para adicionar amigos ao sorteio:
 
 function adicionar() {
-    if(amigosIncluidos.length >= 20) {
+    if (amigosIncluidos.length >= 20) {
         alert("Limite máximo de pessoas atingido!");
         return;
     } else {
         let amigo = document.getElementById("nome-amigo").value;
         amigosIncluidos.push(amigo);
         let listaAmigos = document.getElementById("lista-amigos");
-        listaAmigos.textContent = `${amigosIncluidos}`;
+        listaAmigos.innerHTML = amigosIncluidos.join("<br>");
         document.getElementById("nome-amigo").value = "";
+        return;
     }
 }
 
 // Função para sortear quem será o amigo secreto de quem:
 
 function sortear() {
-
     if (amigosIncluidos.length < 2) {
         alert("Você precisa incluir pelo menos 2 pessoas na lista.");
         return;
     }
 
-    // Caso o número de participantes seja par, "embaralhamos os nomes" aleatoriamente em uma nova lista:
+    // Nova lista cujos itens serão os mesmos da lista original, porém embaralhados com o algoritimo logo abaixo:
+    amigosJaSorteados = [...amigosIncluidos];
 
-    else if(amigosIncluidos.length % 2 == 0) {
-        participantes = amigosIncluidos.length;
-        while(participantes != 0) {
-            let amigoAleatorio = amigosIncluidos[Math.floor(Math.random() * amigosIncluidos.length)];
-            if(amigosJaSorteados.includes(amigoAleatorio)) {
-                amigoAleatorio = "";
-                amigoAleatorio = amigosIncluidos[Math.floor(Math.random() * amigosIncluidos.length)];
-            } else {
-                amigosJaSorteados.push(amigoAleatorio);
-                participantes--;
-            }
-        }
+    // Algoritmo de Fisher–Yates para embaralhar os nomes da lista original na nova lista:
+    for (let posicaoAtual = amigosJaSorteados.length - 1; posicaoAtual > 0; posicaoAtual--) {
+        // O loop começa no último índice (length - 1) e vai até o índice 0.
+        // A cada iteração, fixamos o elemento da posição atual em seu lugar definitivo no embaralhamento.
 
-        // Após embaralhar, montamos os pares, ou seja, quem tirou quem:
+        let posicaoAleatoria = Math.floor(Math.random() * (posicaoAtual + 1));
+        // Escolhemos aleatoriamente uma posição (índice) entre 0 e posicaoAtual, inclusive.
 
-        while(amigosJaSorteados.length != 0) {
-            let listaSorteio = document.getElementById("lista-sorteio");
-            listaSorteio.insertAdjacentHTML("beforeend", `${amigosJaSorteados[amigosJaSorteados.length - 1]} -> ${amigosJaSorteados[amigosJaSorteados.length - 2]}<br>`);
-            amigosJaSorteados.pop(amigosJaSorteados[amigosJaSorteados.length - 1]);
-            amigosJaSorteados.pop(amigosJaSorteados[amigosJaSorteados.length - 2]);
-        }
+        [amigosJaSorteados[posicaoAtual], amigosJaSorteados[posicaoAleatoria]] =
+            [amigosJaSorteados[posicaoAleatoria], amigosJaSorteados[posicaoAtual]];
+        // Trocamos o elemento da posição atual com o da posição sorteada.
+        // Esse processo é repetido até a lista inteira estar embaralhada.
+    }
 
-    } else {
-        alert("Você precisa incluir mais uma pessoa para realizar o sorteio.");
-        return;
+    // Seleciona o elemento HTML onde os pares sorteados serão exibidos e limpa o conteúdo anterior:
+    let listaSorteio = document.getElementById("lista-sorteio");
+    listaSorteio.innerHTML = "";
+
+    // Formação dos pares (quem tirou quem) em ciclo fechado:
+    for (let posicaoAtual = 0; posicaoAtual < amigosJaSorteados.length; posicaoAtual++) {
+        let quem = amigosJaSorteados[posicaoAtual];
+        // A pessoa na posição atual da lista (já embaralhada).
+
+        let tirou = amigosJaSorteados[(posicaoAtual + 1) % amigosJaSorteados.length];
+        // A pessoa seguinte na lista é o "amigo secreto" dela.
+        // O operador % garante que a última pessoa tire a primeira, fechando o ciclo.
+
+        listaSorteio.insertAdjacentHTML("beforeend", `${quem} -> ${tirou}<br>`);
     }
 }
 
@@ -62,5 +65,8 @@ function sortear() {
 
 function reiniciar() {
     amigosIncluidos = [];
+    amigosJaSorteados = [];
     document.getElementById("lista-amigos").textContent = "";
+    document.getElementById("lista-sorteio").textContent = "";
+    return;
 }
