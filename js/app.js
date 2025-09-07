@@ -7,8 +7,7 @@ let participantes;
 // Função para adicionar amigos ao sorteio:
 
 function adicionar() {
-    
-    if(amigosIncluidos.length > 20) {
+    if(amigosIncluidos.length >= 20) {
         alert("Limite máximo de pessoas atingido!");
         return;
     } else {
@@ -45,10 +44,10 @@ function sortear() {
         }
 
         // Após embaralhar, montamos os pares, ou seja, quem tirou quem:
-        // FALTA AGORA MOSTRAR ESSES PARES NA TELA PARA O USUÁRIO MANIPULANDO A LINHA 50 DO HTML:
 
         while(amigosJaSorteados.length != 0) {
-            console.log(`${amigosJaSorteados[amigosJaSorteados.length - 1]} -> ${amigosJaSorteados[amigosJaSorteados.length - 2]}`);
+            let listaSorteio = document.getElementById("lista-sorteio");
+            listaSorteio.insertAdjacentHTML("beforeend", `${amigosJaSorteados[amigosJaSorteados.length - 1]} -> ${amigosJaSorteados[amigosJaSorteados.length - 2]}<br>`);
             amigosJaSorteados.pop(amigosJaSorteados[amigosJaSorteados.length - 1]);
             amigosJaSorteados.pop(amigosJaSorteados[amigosJaSorteados.length - 2]);
         }
