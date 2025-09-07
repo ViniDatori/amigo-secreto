@@ -11,11 +11,17 @@ function adicionar() {
         return;
     } else {
         let amigo = document.getElementById("nome-amigo").value;
-        amigosIncluidos.push(amigo);
-        let listaAmigos = document.getElementById("lista-amigos");
-        listaAmigos.innerHTML = amigosIncluidos.join(", ");
-        document.getElementById("nome-amigo").value = "";
-        return;
+        if(amigosIncluidos.includes(amigo.toLowerCase())) {
+            alert(`${amigo} já foi adicionado!`);
+            amigo = null;
+            return;
+        } else {
+            amigosIncluidos.push(amigo);
+            let listaAmigos = document.getElementById("lista-amigos");
+            listaAmigos.innerHTML = amigosIncluidos.join(", ");
+            document.getElementById("nome-amigo").value = "";
+            return;
+        }
     }
 }
 
@@ -73,6 +79,7 @@ function sortear() {
 function reiniciar() {
     amigosIncluidos = [];
     amigosJaSorteados = [];
+    document.getElementById("nome-amigo").value = "";
     document.getElementById("lista-amigos").textContent = "";
     document.getElementById("lista-sorteio").textContent = "";
     document.getElementById("bt1").removeAttribute("disabled");
