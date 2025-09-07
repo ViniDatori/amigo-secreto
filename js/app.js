@@ -6,22 +6,29 @@ let amigosJaSorteados = [];
 // Função para adicionar amigos ao sorteio:
 
 function adicionar() {
+
+    let amigo = document.getElementById("nome-amigo").value;
+
     if (amigosIncluidos.length >= 20) {
         alert("Limite máximo de pessoas atingido!");
         return;
+    }
+
+    else if (amigo == "") {
+        alert("Digite um nome para começar a adicionar.");
+        return;
+    }
+
+    else if (amigosIncluidos.includes(amigo.toLowerCase())) {
+        alert(`${amigo} já foi adicionado!`);
+        amigo = null;
+        return;
     } else {
-        let amigo = document.getElementById("nome-amigo").value;
-        if(amigosIncluidos.includes(amigo.toLowerCase())) {
-            alert(`${amigo} já foi adicionado!`);
-            amigo = null;
-            return;
-        } else {
-            amigosIncluidos.push(amigo);
-            let listaAmigos = document.getElementById("lista-amigos");
-            listaAmigos.innerHTML = amigosIncluidos.join(", ");
-            document.getElementById("nome-amigo").value = "";
-            return;
-        }
+        amigosIncluidos.push(amigo);
+        let listaAmigos = document.getElementById("lista-amigos");
+        listaAmigos.innerHTML = amigosIncluidos.join(", ");
+        document.getElementById("nome-amigo").value = "";
+        return;
     }
 }
 
