@@ -80,6 +80,11 @@ body {
   margin-top: 1rem;
   padding: 24px;
   width: 453px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-overflow: unset;
+  overflow: visible;
 }
 
 .friends__container > p {
@@ -87,6 +92,11 @@ body {
   font-size: 21px;
   font-weight: 400;
   line-height: 160%;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-overflow: unset;
+  overflow: visible;
 }
 
 .friends__title {
@@ -161,9 +171,11 @@ body {
   font-size: 21px;
   font-style: italic;
   font-weight: 700;
-  height: 199px;
+  height: 250px;
   line-height: 160%;
   margin-top: 1rem;
+  columns: 2;
+  column-gap: 40px;
 }
 
 .prizeDraw__title {

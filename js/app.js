@@ -13,7 +13,7 @@ function adicionar() {
         let amigo = document.getElementById("nome-amigo").value;
         amigosIncluidos.push(amigo);
         let listaAmigos = document.getElementById("lista-amigos");
-        listaAmigos.innerHTML = amigosIncluidos.join("<br>");
+        listaAmigos.innerHTML = amigosIncluidos.join(", ");
         document.getElementById("nome-amigo").value = "";
         return;
     }
