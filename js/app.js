@@ -59,6 +59,13 @@ function sortear() {
 
         listaSorteio.insertAdjacentHTML("beforeend", `${quem} -> ${tirou}<br>`);
     }
+
+    // Desativa os botões "Adicionar" e "Sortear":
+    document.getElementById("bt1").setAttribute("disabled", true);
+    document.getElementById("bt1").style.cursor = "not-allowed";
+    document.getElementById("bt2").setAttribute("disabled", true);
+    document.getElementById("bt2").style.cursor = "not-allowed";
+
 }
 
 // Função para reiniciar:
@@ -68,5 +75,9 @@ function reiniciar() {
     amigosJaSorteados = [];
     document.getElementById("lista-amigos").textContent = "";
     document.getElementById("lista-sorteio").textContent = "";
+    document.getElementById("bt1").removeAttribute("disabled");
+    document.getElementById("bt1").style.cursor = "pointer";
+    document.getElementById("bt2").removeAttribute("disabled");
+    document.getElementById("bt2").style.cursor = "pointer";
     return;
 }
